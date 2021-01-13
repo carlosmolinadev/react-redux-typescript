@@ -52,7 +52,7 @@ export default function TodoForm({}: Props): ReactElement {
     return state.addTodo;
   });
 
-  const onSubmit = (data: Todo) => {
+  const onSubmit = (data: any) => {
     console.log(data);
     addTodo(data);
     reset();
