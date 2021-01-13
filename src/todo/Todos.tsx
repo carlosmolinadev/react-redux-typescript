@@ -6,7 +6,7 @@ interface Props {}
 export default function Todos({}: Props): ReactElement {
   const todos = useStoreState((state) => state.todos);
   const [value, setValue] = React.useState("");
-  const getTodos = useStoreActions((state) => state.getTodos);
+  const getTodos = useStoreActions((state) => state.todos.getTodos);
   console.log(todos);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Todos({}: Props): ReactElement {
   return (
     <div>
       <h1>Todos</h1>
-      <h1>{todos.map((todo) => todo.name)}</h1>
+      <h1>{todos.todos.map((todo) => todo.name)}</h1>
     </div>
   );
 }
