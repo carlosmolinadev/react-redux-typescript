@@ -49,7 +49,7 @@ export default function TodoForm({}: Props): ReactElement {
   });
 
   const addTodo = useStoreActions((state) => {
-    return state.addTodo;
+    return state.todos.addTodo;
   });
 
   const onSubmit = (data: any) => {
