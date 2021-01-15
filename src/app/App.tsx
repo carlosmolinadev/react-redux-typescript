@@ -1,15 +1,12 @@
 import React from "react";
-import FirstApp from "../material-ui-training/FirstApp";
+import FirstApp from "../material-ui-training/first-try/FirstApp";
 import "./App.css";
-import Navbar from "../fireship-io/advanced-dropdowns/Navbar";
-import Todos from "../todo/Todos";
-import TodoForm from "../TodoForm/TodoForm";
+import Header from "../material-ui-training/header/Header";
 
 function App() {
   return (
     <div className="App">
-      <Todos />
-      <TodoForm />
+      <Header />
     </div>
   );
 }
