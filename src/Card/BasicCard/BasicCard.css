@@ -1,0 +1,75 @@
+.button {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  border-right: 0.5rem solid #fff;
+  border-bottom: 0.5rem solid #fff;
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: rotate(135deg);
+  color: transparent;
+  background-color: transparent;
+  outline: none;
+}
+
+.button2 {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  border-right: 0.5rem solid white;
+  border-bottom: 0.5rem solid white;
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: rotate(315deg);
+  color: transparent;
+  background-color: transparent;
+  outline: none;
+  box-shadow: 0 0 0 lightgray;
+}
+
+.bgbutton1 .container {
+  background: url("https://i.ytimg.com/vi/7PXLPzcIydw/maxresdefault.jpg");
+  background-size: cover;
+  height: 100%;
+}
+
+.relative {
+  position: relative;
+  cursor: pointer;
+}
+
+.relative:hover {
+  opacity: 0.9;
+}
+
+.parent {
+  display: flex;
+}
+
+.dotGroup {
+  border: 1px solid black;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 10px 10px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  position: absolute;
+  box-shadow: 0 0 0 lightgray;
+  top: 50%;
+  right: 10px;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  position: absolute;
+  top: 50%;
+  left: 15px;
+}

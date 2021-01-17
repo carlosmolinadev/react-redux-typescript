@@ -5,7 +5,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import React, { ReactElement } from "react";
 import LabelIcon from "@material-ui/icons/Label";
 
