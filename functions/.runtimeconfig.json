@@ -1,0 +1,7 @@
+{
+  "elasticsearch": {
+    "url": "https://f0931e36eb954a4685fc8243234223d9.us-east-1.aws.found.io:9243",
+    "password": "aLx5YvGceEIIPfUqmpaA7rTx",
+    "username": "elastic"
+  }
+}
