@@ -28,6 +28,18 @@ export default function User({}: Props): ReactElement {
     });
   };
 
+  const getRequest = async () => {
+    let response: any;
+    response = await axios.get(
+      "http://localhost:5001/elasticsearch-39019/us-central1/search",
+      {
+        params: { nombre: "carlos", titulo: "Bachiller" },
+      }
+    );
+
+    console.log(response);
+  };
+
   const makeCall = async () => {
     // const query = functions.httpsCallable("search");
     // await query({ titulo: "Honda" });
@@ -39,11 +51,11 @@ export default function User({}: Props): ReactElement {
 
     let response: any;
     response = await axios.post(
-      "http://localhost:5001/elasticsearch-39019/us-central1/search",
+      "https://us-central1-elasticsearch-39019.cloudfunctions.net/search",
       { isRedDiamond: true, titulo: "Juan" }
     );
 
-    console.log(keys);
+    console.log(response);
   };
 
   return (
@@ -51,6 +63,7 @@ export default function User({}: Props): ReactElement {
       <Button onClick={addUser}>Add User</Button>
       <Button onClick={makeCall}>Make call</Button>
       <Button onClick={addCarAdd}>Add Car</Button>
+      <Button onClick={getRequest}>Get Request</Button>
     </div>
   );
 }

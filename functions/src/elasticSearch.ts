@@ -6,7 +6,7 @@ import * as cors from "cors";
 const bodyParser = require("body-parser");
 const { Client } = require("@elastic/elasticsearch");
 
-const app = express();
+export const app = express();
 app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 
@@ -18,27 +18,44 @@ const auth = {
   password: env.elasticsearch.password,
 };
 
-const client = new Client({
+export const client = new Client({
   node: env.elasticsearch.url,
   auth: auth,
 });
 
 app.post("/", async (req, res) => {
   try {
-    const response = await client.search({
-      index: "carros",
+    const { body } = await client.sql.query({
       body: {
-        query: {
-          match: { isRedDiamond: req.body.isRedDiamond },
-        },
+        query: "SELECT * FROM carros WHERE owner = 'Carlos Molina'",
       },
     });
 
-    const concatResponse = response.body.hits;
-    res.send(JSON.stringify(concatResponse));
+    const data = body.rows.map((row: string | any[]) => {
+      const obj: any = {};
+      for (var i = 0; i < row.length; i++) {
+        obj[body.columns[i].name] = row[i];
+      }
+      return obj;
+    });
+
+    res.send(JSON.stringify(data));
+    // res.send(JSON.stringify(data));
   } catch (error) {
     res.send(JSON.stringify(error));
   }
+});
+
+app.get("/", async (req, res) => {
+  console.log("Parameter", req.params);
+  console.log("Query", req.query);
+
+  const keys = [];
+  for (const key in req.query) {
+    keys.push(key);
+  }
+
+  res.status(200).send(keys);
 });
 
 export const createCarAdd = functions.firestore
@@ -87,3 +104,21 @@ export const deleteCarAdd = functions.firestore
 // });
 
 export const search = functions.https.onRequest(app);
+
+// app.post("/", async (req, res) => {
+//   try {
+//     const response = await client.search({
+//       index: "carros",
+//       body: {
+//         query: {
+//           match: { isRedDiamond: req.body.isRedDiamond },
+//         },
+//       },
+//     });
+
+//     const concatResponse = response.body.hits;
+//     res.send(JSON.stringify(concatResponse));
+//   } catch (error) {
+//     res.send(JSON.stringify(error));
+//   }
+// });

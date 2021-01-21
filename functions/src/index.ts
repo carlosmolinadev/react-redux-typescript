@@ -4,7 +4,8 @@ export {
   deleteCarAdd,
   search,
 } from "./elasticSearch";
-//export { api } from "./express";
+
+export { searchCars } from "./searchCars";
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
