@@ -40,6 +40,20 @@ export default function User({}: Props): ReactElement {
     console.log(response);
   };
 
+  const query = { title: "Carlos", description: "Adobe", year: "1990" };
+
+  const iterateObjects = (object: any) => {
+    const finalObject = [];
+    for (let key in object) {
+      let tempObject: any = {};
+      tempObject[key] = object[key];
+      const term = { term: tempObject };
+      finalObject.push(term);
+    }
+
+    console.log(finalObject);
+  };
+
   const makeCall = async () => {
     // const query = functions.httpsCallable("search");
     // await query({ titulo: "Honda" });
@@ -58,12 +72,29 @@ export default function User({}: Props): ReactElement {
     console.log(response);
   };
 
+  const getCars = async () => {
+    let dat: string[] = [];
+    const document = await database
+      .collection("carros")
+      .doc("UslqVPwk7HqVjp0ZCNPd");
+
+    document.get().then((data) => {
+      const tempData = data.data();
+      for (let image in tempData) {
+        dat.push(tempData[image]);
+        console.log(dat);
+      }
+    });
+  };
+
   return (
     <div>
       <Button onClick={addUser}>Add User</Button>
       <Button onClick={makeCall}>Make call</Button>
       <Button onClick={addCarAdd}>Add Car</Button>
       <Button onClick={getRequest}>Get Request</Button>
+      <Button onClick={getCars}>Get Car</Button>
+      <Button onClick={() => iterateObjects(query)}>Iterate objects</Button>
     </div>
   );
 }
