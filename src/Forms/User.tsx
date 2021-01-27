@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React, { ReactElement } from "react";
-import { database, functions } from "../utils/firebase";
+import { database, functions, timestamp } from "../utils/firebase";
 import axios from "axios";
 
 interface Props {}
@@ -24,7 +24,7 @@ export default function User({}: Props): ReactElement {
       isRedDiamond: true,
       isEmerald: false,
       isSapphire: false,
-      date: new Date(),
+      date: timestamp.now(),
     });
   };
 
@@ -33,7 +33,11 @@ export default function User({}: Props): ReactElement {
     response = await axios.get(
       "http://localhost:5001/elasticsearch-39019/us-central1/search",
       {
-        params: { nombre: "carlos", titulo: "Bachiller" },
+        params: {
+          nombre: "carlos",
+          titulo: "Bachiller",
+          nested: ["Carlos", "Molina", "Martinez"],
+        },
       }
     );
 
@@ -73,6 +77,12 @@ export default function User({}: Props): ReactElement {
   };
 
   const getCars = async () => {
+    // const books = await database
+    //   .collectionGroup("books")
+    //   .where("published", "==", "1974")
+    //   .get();
+    // books.forEach((doc) => console.log(doc.id));
+
     let dat: string[] = [];
     const document = await database
       .collection("carros")
@@ -89,7 +99,9 @@ export default function User({}: Props): ReactElement {
 
   return (
     <div>
-      <Button onClick={addUser}>Add User</Button>
+      <Button color="primary" onClick={addUser}>
+        Add User
+      </Button>
       <Button onClick={makeCall}>Make call</Button>
       <Button onClick={addCarAdd}>Add Car</Button>
       <Button onClick={getRequest}>Get Request</Button>

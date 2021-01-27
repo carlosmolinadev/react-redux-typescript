@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 
 admin.initializeApp(functions.config().firebase);
 
+const db = admin.firestore();
+
 const env = functions.config();
 const auth = {
   username: env.elasticsearch.username,
@@ -27,7 +29,7 @@ app.post("/", async (req, res) => {
   try {
     const { body } = await client.sql.query({
       body: {
-        query: "SELECT * FROM carros WHERE owner = 'Carlos Molina'",
+        query: "SELECT titulo FROM carros WHERE owner = 'Carlos Martinez'",
       },
     });
 
@@ -46,9 +48,11 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.get("/", async (req, res) => {
+app.get("/", async (req: any, res) => {
   console.log("Parameter", req.params);
   console.log("Query", req.query);
+  const array: string[] = req.query.nested;
+  array.map((t) => console.log(t));
 
   const keys = [];
   for (const key in req.query) {
@@ -88,6 +92,34 @@ export const deleteCarAdd = functions.firestore
       type: "_doc",
       id: snap.id,
     });
+  });
+
+export const createFile = functions.firestore
+  .document("carros/{id}")
+  .onUpdate(async (snap, context) => {
+    const data = snap.after.data();
+
+    if (data.isRedDiamond === true) {
+      const currentId = snap.after.id;
+      db.collection("redDiamond").add({
+        redDiamond: data.isRedDiamond,
+        days: 15,
+        color: "red",
+      });
+      db.collection("carros").doc(currentId).set(
+        {
+          isSapphire: false,
+        },
+        { merge: true }
+      );
+    }
+  });
+
+export const newUser = functions.firestore
+  .document("users/{id}")
+  .onCreate((snap, context) => {
+    const id = snap.id;
+    db.collection("user").doc(id).set({ credits: 10 }, { merge: true });
   });
 
 // export const search = functions.https.onCall(async (data, context) => {

@@ -7,9 +7,7 @@ import {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    customColor: {
-      backgroundColor: "#7960fd",
-    },
+    customColor: {},
     root: {
       display: "flex",
     },

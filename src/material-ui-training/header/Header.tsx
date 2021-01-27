@@ -110,7 +110,7 @@ export default function Header({}: Props): ReactElement {
   return (
     <>
       <div className={classes.root}>
-        <AppBar position="static" className={classes.customColor}>
+        <AppBar position="static">
           <Toolbar>
             <IconButton
               edge="start"
@@ -123,7 +123,7 @@ export default function Header({}: Props): ReactElement {
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
               {listMenu()}
             </Drawer>
-            <IconButton className={classes.logo}>LOGO</IconButton>
+            <IconButton className={classes.logo}>LOG</IconButton>
             <div className={classes.search}>
               <InputBase
                 placeholder="Buscar…"
