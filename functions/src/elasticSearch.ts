@@ -48,18 +48,36 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.get("/", async (req: any, res) => {
-  console.log("Parameter", req.params);
-  console.log("Query", req.query);
-  const array: string[] = req.query.nested;
-  array.map((t) => console.log(t));
+app.get("/", async (req, res) => {
+  try {
+    // const finalObject = [];
+    // if (Object.keys(req.query).length !== 0) {
+    //   for (let key in req.query) {
+    //     let tempObject: any = {};
+    //     tempObject[key] = req.query[key];
+    //     const term = { term: tempObject };
+    //     finalObject.push(term);
+    //   }
+    // }
 
-  const keys = [];
-  for (const key in req.query) {
-    keys.push(key);
+    console.log(req.query);
+    const body = await client.search({
+      index: "carros",
+      // from: req.query.from,
+      // size: 1,
+      body: {
+        query: {
+          match_all: {},
+        },
+      },
+    });
+    console.log(body);
+    res.status(200).send(body);
+  } catch (error) {
+    res.send(error);
   }
 
-  res.status(200).send(keys);
+  res.status(200).send();
 });
 
 export const createCarAdd = functions.firestore

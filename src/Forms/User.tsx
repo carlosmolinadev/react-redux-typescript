@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import React, { ReactElement } from "react";
 import { database, functions, timestamp } from "../utils/firebase";
 import axios from "axios";
+import { date } from "yup";
 
 interface Props {}
 
@@ -30,18 +31,44 @@ export default function User({}: Props): ReactElement {
 
   const getRequest = async () => {
     let response: any;
-    response = await axios.get(
-      "http://localhost:5001/elasticsearch-39019/us-central1/search",
-      {
-        params: {
-          nombre: "carlos",
-          titulo: "Bachiller",
-          nested: ["Carlos", "Molina", "Martinez"],
-        },
-      }
-    );
+    response = await axios.get("http://localhost:5000/vehiculos", {
+      params: {
+        category: "vehiculos",
+        subcategories: ["autos_usados"],
+        price: { gte: 1000, lte: 6000 },
+        locations: ["santa_tecla"],
+        coordenates: { lat: 40, lon: -50 },
+      },
+    });
+
+    // response = await axios.get("http://localhost:5000/vehiculos", {
+    //   params: {
+    //     nombre: "carlos",
+    //     titulo: "Bachiller",
+    //     nested: ["Carlos", "Molina", "Martinez"],
+    //     subnested: { name: { subname: "Carlos" } },
+    //   },
+    // });
 
     console.log(response);
+  };
+
+  const putRequest = async () => {
+    const res = await axios.put("http://localhost:5000/vehiculos", {
+      category: "vehiculos",
+      subcategory: "autos_usados",
+      brand: "Toyota",
+      model: "Civic",
+      title: "Toyota usado en perfectas condiciones",
+      price: 5000,
+      year: "2000",
+      status: "diamond",
+      location: "san_salvador",
+      email: "carlos_molina@gmail.com",
+      phone: "75586542",
+      createdAt: new Date(),
+    });
+    console.log(res.data);
   };
 
   const query = { title: "Carlos", description: "Adobe", year: "1990" };
@@ -102,11 +129,12 @@ export default function User({}: Props): ReactElement {
       <Button color="primary" onClick={addUser}>
         Add User
       </Button>
-      <Button onClick={makeCall}>Make call</Button>
-      <Button onClick={addCarAdd}>Add Car</Button>
-      <Button onClick={getRequest}>Get Request</Button>
-      <Button onClick={getCars}>Get Car</Button>
-      <Button onClick={() => iterateObjects(query)}>Iterate objects</Button>
+      {/* <Button onClick={makeCall}>Make call</Button>
+      <Button onClick={addCarAdd}>Add Car</Button> */}
+      <Button onClick={getRequest}>GET Request</Button>
+      <Button onClick={putRequest}>PUT Request</Button>
+      {/* <Button onClick={getCars}>Get Car</Button>
+      <Button onClick={() => iterateObjects(query)}>Iterate objects</Button> */}
     </div>
   );
 }

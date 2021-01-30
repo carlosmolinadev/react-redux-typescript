@@ -7,7 +7,7 @@ export {
   newUser,
 } from "./elasticSearch";
 
-// export { searchCars } from "./searchCars";
+export { searchCars } from "./searchCars";
 // export { postgres } from "./supabase";
 
 // // Start writing Firebase Functions
